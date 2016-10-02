@@ -20,7 +20,7 @@ public class HsqlDb1Test {
 
 	public void testConnection1() throws SQLException, ClassNotFoundException {
 		Class.forName("org.hsqldb.jdbcDriver");
-		try (Connection c = DriverManager.getConnection("jdbc:hsqldb:mem:test1", "sa", "")) {
+		try (Connection c = DriverManager.getConnection("jdbc:hsqldb:mem:test2", "sa", "")) {
 			try (PreparedStatement stmt = c.prepareStatement("create table t1 (id integer  IDENTITY PRIMARY KEY, col1 int,  dt TIMESTAMP)")) {
 				stmt.execute();
 			}

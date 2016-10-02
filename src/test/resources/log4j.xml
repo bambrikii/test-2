@@ -10,6 +10,10 @@
 		</layout>
 	</appender>
 
+	<logger name="log4j.logger.org.quartz.simpl.SimpleThreadPool">
+		<level value="DEBUG"></level>
+	</logger>
+
 	<root>
 		<level value="DEBUG"/>
 		<appender-ref ref="console"/>
