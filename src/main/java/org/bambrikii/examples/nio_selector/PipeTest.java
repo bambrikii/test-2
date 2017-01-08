@@ -2,12 +2,9 @@ package org.bambrikii.examples.nio_selector;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.channels.Pipe;
-import java.nio.channels.SelectableChannel;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
+import java.nio.channels.*;
 import java.util.Calendar;
-import java.util.Set;
+import java.util.Iterator;
 
 /**
  * Created by Alexander Arakelyan on 06/01/17 10:19.
@@ -33,15 +30,22 @@ public class PipeTest {
 		SelectionKey sourceSelectorKey = source.register(selector, SelectionKey.OP_READ);
 //		sourceSelectorKey.attach(new Object());
 
-		selector.select();
-
 		Thread sinkThread = new Thread() {
 			@Override
 			public void run() {
+				int i = 0;
+				long prevMillis = 0;
 				while (!currentThread().isInterrupted() && sink.isOpen()) {
 
 					ByteBuffer l1 = ByteBuffer.allocate(Long.BYTES);
-					l1.putLong(Calendar.getInstance().getTimeInMillis());
+					long timeInMillis = Calendar.getInstance().getTimeInMillis();
+					if (timeInMillis == prevMillis) {
+						i = i + 1;
+					} else {
+						i = 0;
+						prevMillis = timeInMillis;
+					}
+					l1.putLong(timeInMillis * 1000 + i);
 					l1.flip();
 					try {
 						sink.write(l1);
@@ -64,31 +68,43 @@ public class PipeTest {
 		Thread sourceThread = new Thread() {
 			@Override
 			public void run() {
+				w:
 				while (!currentThread().isInterrupted()) {
-					Set<SelectionKey> keys = selector.keys();
-					for (SelectionKey key : keys) {
-						SelectableChannel channel = key.channel();
-						if (channel instanceof Pipe.SourceChannel) {
-							ByteBuffer l2 = ByteBuffer.allocate(Long.BYTES);
-							try {
-								((Pipe.SourceChannel) channel).read(l2);
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-							l2.rewind();
-							long aLong = l2.getLong();
-							if (aLong != 0) {
-								System.out.println(" " + aLong);
-							}
-							try {
-								Thread.sleep(1000);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-								break;
+					try {
+						int selected = selector.select();
+						System.out.println("selected: " + selected);
+						if (selected > 0) {
+							Iterator<SelectionKey> keys = selector.selectedKeys().iterator();
+							while (keys.hasNext()) {
+								SelectionKey key = keys.next();
+								System.out.println(" current channel: class = " + key.channel().getClass().getName() + ", OP_READ = " + (key.interestOps() & SelectionKey.OP_READ));
+								if ((key.interestOps() & SelectionKey.OP_READ) > 0) {
+									SelectableChannel channel = key.channel();
+									ByteBuffer l2 = ByteBuffer.allocate(Long.BYTES);
+									try {
+										((ReadableByteChannel) channel).read(l2);
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+									l2.rewind();
+									long aLong = l2.getLong();
+									if (aLong != 0) {
+										System.out.println(" data read: " + aLong);
+									}
+									try {
+										Thread.sleep(1000);
+									} catch (InterruptedException e) {
+										e.printStackTrace();
+										break w;
+									}
+								}
+								keys.remove();
 							}
 						}
+					} catch (IOException ex) {
+						ex.printStackTrace();
+						break w;
 					}
-//			keys.clear();
 				}
 			}
 		};
