@@ -25,7 +25,7 @@ public class RingBufferTest {
 		buf.push(3);
 		assertEquals(Integer.valueOf(1), buf.pop());
 		assertEquals(Integer.valueOf(2), buf.pop());
-		assertEquals(null, buf.pop());
+		assertEquals(Integer.valueOf(3), buf.pop());
 		assertEquals(null, buf.pop());
 	}
 
@@ -35,18 +35,20 @@ public class RingBufferTest {
 		buf.push(1);
 		buf.push(2);
 		assertEquals(Integer.valueOf(1), buf.pop());
-		assertEquals(null, buf.pop());
-		buf.push(3);
 		assertEquals(Integer.valueOf(2), buf.pop());
+		buf.push(3);
+		assertEquals(Integer.valueOf(3), buf.pop());
 		assertEquals(null, buf.pop());
 		buf.push(4);
-		assertEquals(Integer.valueOf(3), buf.pop());
-		buf.push(5);
 		assertEquals(Integer.valueOf(4), buf.pop());
-		buf.push(6);
+		buf.push(5);
 		assertEquals(Integer.valueOf(5), buf.pop());
-		buf.push(7);
+		buf.push(6);
 		assertEquals(Integer.valueOf(6), buf.pop());
+		buf.push(7);
+		assertEquals(Integer.valueOf(7), buf.pop());
 		buf.push(8);
+		assertEquals(Integer.valueOf(8), buf.pop());
+		assertEquals(null, buf.pop());
 	}
 }

@@ -5,9 +5,9 @@ import java.lang.reflect.TypeVariable;
 
 /**
  * Created by Alexander Arakelyan on 25/01/17 13:26.
- * <p>
+ * <p/>
  * Uses backing array to store values.
- * Last value is always stored and is non popped out.
+ * Return value as if popped out from a linked list.
  */
 public class RingBuffer<T> implements RingBufferable<T> {
 	private T[] arr;
@@ -25,24 +25,28 @@ public class RingBuffer<T> implements RingBufferable<T> {
 
 	@Override
 	public boolean push(T elem) {
-		int newPos = pos + 1;
-		if (newPos > len - 1) {
-			if (newPos == tail) {
+		int nextPos = calcNextPos();
+		if (nextPos > len - 1) {
+			if (nextPos == tail) {
 				return false;
 			}
-			newPos = newPos % (len - 1) - 1;
-			if (newPos < tail) {
-				return push(elem, newPos);
-			} else if (newPos > tail) {
-				return push(elem, newPos);
+			nextPos = nextPos % (len - 1) - 1;
+			if (nextPos < tail) {
+				return push(elem, nextPos);
+			} else if (nextPos > tail) {
+				return push(elem, nextPos);
 			}
-		} else if (newPos < tail) {
-			return push(elem, newPos);
-		} else if (newPos > tail) {
-			return push(elem, newPos);
+		} else if (nextPos < tail) {
+			return push(elem, nextPos);
+		} else if (nextPos > tail) {
+			return push(elem, nextPos);
 		}
 
 		return false;
+	}
+
+	private int calcNextPos() {
+		return pos + 1;
 	}
 
 	private boolean push(T elem, int newPos) {
@@ -53,22 +57,19 @@ public class RingBuffer<T> implements RingBufferable<T> {
 
 	@Override
 	public T pop() {
-		int newTail = tail + 1;
-		if (newTail > len - 1) {
-			newTail = 0;
-			if (newTail < pos) {
-				return pop(newTail);
-			} else if (newTail > pos) {
-				return pop(newTail);
-			}
-		} else {
-			if (newTail > pos) {
-				return pop(newTail);
-			} else if (newTail < pos) {
-				return pop(newTail);
-			}
+		if (tail == pos) {
+			return null;
 		}
-		return null;
+		int nextTail = calcNextTail();
+		return pop(nextTail);
+	}
+
+	private int calcNextTail() {
+		int nextTail = tail + 1;
+		if (nextTail > len - 1) {
+			nextTail = 0;
+		}
+		return nextTail;
 	}
 
 	private T pop(int newTail) {
