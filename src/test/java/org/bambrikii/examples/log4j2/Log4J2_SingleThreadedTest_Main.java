@@ -6,9 +6,9 @@ import org.apache.logging.log4j.Logger;
 /**
  * Created by Alexander Arakelyan on 22/08/17 21:17.
  */
-public class Log4J2Main {
-	private static final Logger LOGGER = LogManager.getLogger(Log4J2Main.class);
-	private static final org.apache.log4j.Logger LOGGER1 = org.apache.log4j.Logger.getLogger(Log4J2Main.class);
+public class Log4J2_SingleThreadedTest_Main {
+	private static final Logger LOGGER = LogManager.getLogger(Log4J2_SingleThreadedTest_Main.class);
+	private static final org.apache.log4j.Logger LOGGER1 = org.apache.log4j.Logger.getLogger(Log4J2_SingleThreadedTest_Main.class);
 
 	public static void main(String[] args) {
 		long start = System.currentTimeMillis();
