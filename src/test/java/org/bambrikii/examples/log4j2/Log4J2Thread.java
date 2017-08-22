@@ -15,11 +15,13 @@ public class Log4J2Thread implements Runnable {
 
 	@Override
 	public void run() {
-		long start = System.currentTimeMillis();
+		long total = 0;
 		for (int i = 0; i < i1; i++) {
+			long start = System.currentTimeMillis();
 			LOGGER_LOG4J2.debug("asd");
+			long stop = System.currentTimeMillis();
+			total += stop - start;
 		}
-		long stop = System.currentTimeMillis();
-		System.out.println(Thread.currentThread().getName() + ": " + (stop - start));
+		System.out.println(Thread.currentThread().getName() + ": " + total);
 	}
 }
