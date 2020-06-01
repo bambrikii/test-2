@@ -5,9 +5,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- * Created by Alexander Arakelyan on 01.10.16 12:53.
- */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Class1 {

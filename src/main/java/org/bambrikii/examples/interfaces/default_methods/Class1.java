@@ -17,7 +17,7 @@ public class Class1 {
 		};
 	}
 
-	class _ {
+	class a_ { // as of release 9, '_' is a keyword, and may not be used as an identifier
 
 	}
 }

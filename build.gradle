@@ -1,13 +1,8 @@
 apply plugin: 'java'
 apply plugin: 'maven'
 
-group = 'org.bambrikii.examples'
-version = '1.0-SNAPSHOT'
-
-description = """"""
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 11
+targetCompatibility = 11
 
 
 
@@ -38,6 +33,14 @@ dependencies {
   compile("org.springframework.boot:spring-boot-actuator:1.5.10.RELEASE")
   compile("org.flywaydb:flyway-core:5.1.4")
   compile("org.postgresql:postgresql:42.2.12.jre7")
+  compile("javax.annotation:javax.annotation-api:1.3.2")
+  
+  compile("com.sun.activation:javax.activation:${javaxActivationVersion}")
+  compile("javax.xml.bind:jaxb-api:${jaxbApiVersion}")
+  compile("com.sun.xml.bind:jaxb-core:${jaxbApiVersion}")
+  compile("com.sun.xml.bind:jaxb-impl:${jaxbApiVersion}")
+  
+  
   testCompile("junit:junit:4.12")
   testCompile("commons-beanutils:commons-beanutils:1.9.2")
   testCompile("org.apache.commons:commons-lang3:3.4")
@@ -49,4 +52,4 @@ dependencies {
 	
   testCompileOnly("org.projectlombok:lombok:1.18.12")
   testAnnotationProcessor("org.projectlombok:lombok:1.18.12")
-}
+  }

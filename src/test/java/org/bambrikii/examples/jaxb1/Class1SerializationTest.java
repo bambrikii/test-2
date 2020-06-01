@@ -6,9 +6,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-/**
- * Created by Alexander Arakelyan on 01.10.16 14:04.
- */
 public class Class1SerializationTest {
 	@Test
 	public void test1() throws JAXBException {
