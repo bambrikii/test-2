@@ -1,6 +1,6 @@
 package org.bambrikii.examples.springintegration.customoutboundadapter;
 
-import org.springframework.integration.dsl.core.MessageHandlerSpec;
+import org.springframework.integration.dsl.MessageHandlerSpec;
 
 /**
  * Created by Alexander Arakelyan on 06/06/18 21:45.
