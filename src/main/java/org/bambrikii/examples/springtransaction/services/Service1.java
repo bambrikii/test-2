@@ -16,12 +16,12 @@ public class Service1 {
     @Autowired
     private Service1 service1;
 
-    @Transactional(Transactional.TxType.NEVER)
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void transaction1() {
         log.info("transaction1");
         createAndSaveUserDetails("example1@example.com");
-//        service1.transaction2();
-        transaction2();
+        service1.transaction2();
+//        transaction2();
     }
 
     private void createAndSaveUserDetails(String email) {
