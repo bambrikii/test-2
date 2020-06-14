@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.IllegalTransactionStateException;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -101,9 +102,15 @@ public class Service1 {
     @Autowired
     private EntityManager entityManager;
 
+    /**
+     * https://www.baeldung.com/spring-programmatic-transaction-management
+     */
     public void method9programmatic() {
         log.info("method9 - programmatic");
-        TransactionDefinition definition = TransactionDefinition.withDefaults();
+//        TransactionDefinition definition = TransactionDefinition.withDefaults();
+        DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
+        definition.setIsolationLevel(TransactionDefinition.ISOLATION_REPEATABLE_READ);
+        definition.setTimeout(3);
         TransactionStatus status = transactionManager.getTransaction(definition);
         try {
             UserDetails details = new UserDetails();
