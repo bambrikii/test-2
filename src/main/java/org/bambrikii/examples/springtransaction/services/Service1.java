@@ -4,12 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.bambrikii.examples.springtransaction.entities.UserDetails;
 import org.bambrikii.examples.springtransaction.repositories.UserDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.IllegalTransactionStateException;
+import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.io.IOException;
 
@@ -91,5 +94,24 @@ public class Service1 {
         log.info("method8 - rollbackOn = IOException");
         UserDetails details = createAndSaveUserDetails("example8@example.com");
         throw new IOException();
+    }
+
+    @Autowired
+    private JpaTransactionManager transactionManager;
+    @Autowired
+    private EntityManager entityManager;
+
+    public void method9programmatic() {
+        log.info("method9 - programmatic");
+        TransactionDefinition definition = TransactionDefinition.withDefaults();
+        TransactionStatus status = transactionManager.getTransaction(definition);
+        try {
+            UserDetails details = new UserDetails();
+            details.setEmail("example9manual@example.com");
+            entityManager.persist(details);
+            transactionManager.commit(status);
+        } catch (Exception ex) {
+            transactionManager.rollback(status);
+        }
     }
 }

@@ -47,6 +47,7 @@ public class SpringTransactionMain {
                 log.error(ex.getMessage(), ex);
             }
         });
+        service1.method9programmatic();
         SpringApplication.exit(context);
     }
 
