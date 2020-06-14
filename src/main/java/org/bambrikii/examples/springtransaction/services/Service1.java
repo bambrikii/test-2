@@ -5,8 +5,13 @@ import org.bambrikii.examples.springtransaction.entities.UserDetails;
 import org.bambrikii.examples.springtransaction.repositories.UserDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.IllegalTransactionStateException;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 
 @Slf4j
 @Service
@@ -24,10 +29,11 @@ public class Service1 {
 //        transaction2();
     }
 
-    private void createAndSaveUserDetails(String email) {
+    private UserDetails createAndSaveUserDetails(String email) {
         UserDetails details = new UserDetails();
         details.setEmail(email);
         userDetailsRepository.save(details);
+        return details;
     }
 
     @Transactional(Transactional.TxType.REQUIRES_NEW)
@@ -37,5 +43,53 @@ public class Service1 {
 
     public void method1() {
         log.info("method1");
+    }
+
+    @Autowired
+    private TransactionTemplate transactionTemplate;
+
+    public void method3() {
+        transactionTemplate.execute(new TransactionCallback<Object>() {
+            @Override
+            public Object doInTransaction(TransactionStatus status) {
+                UserDetails details = createAndSaveUserDetails("example3@example.com");
+                return details;
+            }
+        });
+    }
+
+    @Transactional
+    public void method4() {
+        log.info("method6 - RuntimeException");
+        UserDetails details = createAndSaveUserDetails("example4@example.com");
+        throw new RuntimeException();
+    }
+
+    @Transactional
+    public void method5() {
+        log.info("method6 - IllegalTransactionStateException");
+        UserDetails details = createAndSaveUserDetails("example5@example.com");
+        throw new IllegalTransactionStateException("");
+    }
+
+    @Transactional
+    public void method6() throws IOException {
+        log.info("method6 - IOException");
+        UserDetails details = createAndSaveUserDetails("example6@example.com");
+        throw new IOException();
+    }
+
+    @Transactional(dontRollbackOn = RuntimeException.class)
+    public void method7() {
+        log.info("method7 - dontRollbackOn = RuntimeException");
+        UserDetails details = createAndSaveUserDetails("example7@example.com");
+        throw new RuntimeException();
+    }
+
+    @Transactional(rollbackOn = IOException.class)
+    public void method8() throws IOException {
+        log.info("method8 - rollbackOn = IOException");
+        UserDetails details = createAndSaveUserDetails("example8@example.com");
+        throw new IOException();
     }
 }
