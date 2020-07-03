@@ -44,7 +44,7 @@ public class ExceptionConfiguration {
     public IntegrationFlow fileReadingFlow(/*Executor myPollingTaskScheduler, *//*ErrorHandler myErrorHandler, */MessageChannel errorChannel) {
         FileReadingMessageSource fileReadingMessageSource = new FileReadingMessageSource();
         fileReadingMessageSource.setDirectory(new File("src/test/resources/org/bambrikii/examples/springintegration/"));
-        fileReadingMessageSource.setFilter(new AbstractFileListFilter<>() {
+        fileReadingMessageSource.setFilter(new AbstractFileListFilter<File>() {
             @Override
             public boolean accept(File file) {
                 return file.getName().endsWith(".sitest");

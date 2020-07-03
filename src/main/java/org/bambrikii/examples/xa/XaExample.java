@@ -1,17 +1,17 @@
 package org.bambrikii.examples.xa;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.MessageFormat;
+import org.postgresql.xa.PGXADataSource;
+
 import javax.sql.XAConnection;
 import javax.transaction.SystemException;
 import javax.transaction.xa.XAException;
 import javax.transaction.xa.XAResource;
 import javax.transaction.xa.Xid;
-import org.postgresql.PGProperty;
-import org.postgresql.xa.PGXADataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.MessageFormat;
 
 public class XaExample {
   public static void main(String[] args) throws SQLException, SystemException, ClassNotFoundException, XAException {
