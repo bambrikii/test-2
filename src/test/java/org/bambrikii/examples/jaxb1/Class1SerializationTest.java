@@ -1,10 +1,10 @@
 package org.bambrikii.examples.jaxb1;
 
-import org.junit.Test;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+
+import org.junit.jupiter.api.Test;
 
 public class Class1SerializationTest {
 	@Test
@@ -23,7 +23,6 @@ public class Class1SerializationTest {
 		class1.setProp3(0);
 		class1.setProp4(0);
 		marshaller.marshal(class1, System.out);
-
 
 		class1.setProp2(null);
 		class1.setProp3(0);

@@ -1,5 +1,8 @@
 package org.bambrikii.examples.commons_beanutils1;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.Converter;
@@ -8,10 +11,7 @@ import org.bambrikii.examples.commons_beanutils1.content.SubContent;
 import org.bambrikii.examples.commons_beanutils1.content.SubSubContent;
 import org.bambrikii.examples.commons_beanutils1.content2.Content2;
 import org.bambrikii.examples.commons_beanutils1.content2.SubContent2;
-import org.junit.Test;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.Date;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by Alexander Arakelyan on 02/08/17 20:10.

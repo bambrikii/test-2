@@ -1,6 +1,6 @@
 package org.bambrikii.examples.springintegration;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.config.EnableIntegration;
@@ -17,10 +17,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 @RunWith(SpringJUnit4ClassRunner.class)
 @EnableIntegration
 //@EnableAutoConfiguration
-@ContextConfiguration(
-		loader = AnnotationConfigContextLoader.class,
-		classes = {Test1Config.class}
-)
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { Test1Config.class })
 public class Test1 {
 	@Autowired
 	private MessageChannel inputChannel;

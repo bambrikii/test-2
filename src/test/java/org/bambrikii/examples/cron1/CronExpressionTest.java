@@ -1,11 +1,11 @@
 package org.bambrikii.examples.cron1;
 
-import org.junit.Test;
-import org.quartz.CronExpression;
-import org.quartz.SchedulerException;
-
 import java.text.ParseException;
 import java.util.Calendar;
+
+import org.junit.jupiter.api.Test;
+import org.quartz.CronExpression;
+import org.quartz.SchedulerException;
 
 /**
  * Created by Alexander Arakelyan on 11.07.16 20:13.

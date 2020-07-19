@@ -1,17 +1,17 @@
 package org.bambrikii.examples.springintegration;
 
+import java.util.concurrent.Executors;
+import java.util.function.Function;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.channel.ExecutorChannel;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.IntegrationFlows;
+import org.springframework.integration.dsl.MessageChannels;
 import org.springframework.integration.dsl.StandardIntegrationFlow;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
-
-import java.util.concurrent.Executors;
-import java.util.function.Function;
-import org.springframework.integration.dsl.MessageChannels;
 
 /**
  * Created by Alexander Arakelyan on 11/11/17 20:51.
