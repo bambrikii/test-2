@@ -24,10 +24,10 @@ import javax.sql.DataSource;
 
 @EnableAutoConfiguration
 @EntityScan(basePackageClasses = {
-        People.class
+    People.class
 })
 @ComponentScan(basePackageClasses = {
-        JobCompletionNotificationListener.class
+    JobCompletionNotificationListener.class
 })
 @Configuration
 @EnableBatchProcessing
@@ -44,9 +44,11 @@ public class BatchConfiguration {
                 .resource(new ClassPathResource("/org/bambrikii/examples/batch/sample-data.csv"))
                 .delimited()
                 .names(new String[]{"firstName", "lastName"})
-                .fieldSetMapper(new BeanWrapperFieldSetMapper<>() {{
-                    setTargetType(Person.class);
-                }})
+                .fieldSetMapper(new BeanWrapperFieldSetMapper<Person>() {
+                    {
+                        setTargetType(Person.class);
+                    }
+                })
                 .build();
     }
 
