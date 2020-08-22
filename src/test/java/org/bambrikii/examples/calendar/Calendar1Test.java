@@ -1,3 +1,5 @@
+package org.bambrikii.examples.calendar;
+
 import static java.util.Calendar.DAY_OF_MONTH;
 import static java.util.Calendar.HOUR_OF_DAY;
 import static java.util.Calendar.MINUTE;
@@ -10,20 +12,15 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-/**
- * Created by Alexander Arakelyan on 03.09.16 22,30.
- */
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 public class Calendar1Test {
-
-	private static final Logger logger = LoggerFactory.getLogger(Calendar1Test.class);
-
 	@Test
 	public void test1() {
 		m1(2008, 1, 1, 18, 0, 0);
-		logger.info("");
+		log.info("");
 		m1(2008, 8, 1, 18, 0, 0);
 
 		m1(2016, 2, 12, 18, 0, 0);
@@ -40,7 +37,7 @@ public class Calendar1Test {
 		cal.set(year, month, date, hourOfDay, minute, second);
 		cal.set(Calendar.MILLISECOND, 0);
 		long millis = cal.getTimeInMillis();
-		logger.info("{}", millis);
+		log.info("{}", millis);
 		print(cal);
 
 		Calendar cal2 = new GregorianCalendar();
@@ -70,6 +67,6 @@ public class Calendar1Test {
 		long min = cal.get(MINUTE);
 		long sec = cal.get(SECOND);
 		String tz = cal.getTimeZone().getID();
-		logger.info(String.format("%04d-%02d-%02d %02d:%02d:%02d %-15s", year, mon, day, hour, min, sec, tz));
+		log.info(String.format("%04d-%02d-%02d %02d:%02d:%02d %-15s", year, mon, day, hour, min, sec, tz));
 	}
 }

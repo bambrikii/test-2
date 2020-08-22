@@ -105,3 +105,18 @@ sourceSets {
 		}
 	}
 }
+
+task myTask1(){
+	logger.lifecycle("myTask1 - 1")
+	doLast{
+		logger.lifecycle("myTask1 - 2")
+		exec {
+			executable "ls"
+			args "-la"
+		}
+		exec {
+			executable "readlink"
+			args ".", "-f"
+		}
+	}
+}
