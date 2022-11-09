@@ -1,122 +1,130 @@
 buildscript {
-	repositories {
-		jcenter()
-		maven { url "https://plugins.gradle.org/m2/" }
-	}
-	dependencies {
-		classpath "me.champeau.gradle:jmh-gradle-plugin:0.4.5"
-	}
+    repositories {
+        jcenter()
+        maven { url "https://plugins.gradle.org/m2/" }
+        mavenCentral()
+    }
+    dependencies {
+//        classpath "me.champeau.gradle:jmh-gradle-plugin:0.4.5"
+    }
 }
 
 apply plugin: "java"
-apply plugin: "maven"
-apply plugin: "me.champeau.gradle.jmh"
+//apply plugin: "maven"
+//apply plugin: "me.champeau.gradle.jmh"
 apply plugin: "groovy"
 
-sourceCompatibility = 11
-targetCompatibility = 11
+sourceCompatibility = 17
+targetCompatibility = 17
 
 
 repositories {
-	maven { url "https://repo1.maven.org/maven2" }
+    maven { url "https://repo1.maven.org/maven2" }
 }
 
 dependencies {
-	compile("org.hsqldb:hsqldb:2.3.4")
-	compile("org.hibernate:hibernate-core:4.3.6.Final")
-	compile("org.hibernate:hibernate-entitymanager:4.3.6.Final")
-	compile("opensymphony:quartz:1.6.3")
-	compile("commons-collections:commons-collections:3.2.1")
-	compile("commons-logging:commons-logging:1.1.1")
-	compile("net.sf.ehcache:ehcache:2.10.4")
-	compile("org.apache.logging.log4j:log4j-api:2.8.2")
-	compile("org.apache.logging.log4j:log4j-core:2.8.2")
-	compile("org.apache.logging.log4j:log4j-1.2-api:2.2")
-	//  compile("org.apache.logging.log4j:log4j-slf4j-impl:2.2")
-	compile("com.lmax:disruptor:3.3.6")
-	compile("org.springframework.integration:spring-integration-core:${springVersion}")
-	compile("org.springframework.integration:spring-integration-file:${springVersion}")
-	compile("org.springframework:spring-core:${springVersion}")
-	compile("org.springframework:spring-web:${springVersion}")
-	//  compile("org.springframework.integration:spring-integration-java-dsl:1.2.3.RELEASE")
-	compile("org.springframework.metrics:spring-metrics:0.5.1.RELEASE")
-	compile("org.springframework.boot:spring-boot:${springBootVersion}")
-	compile("org.springframework.boot:spring-boot-actuator:${springBootVersion}")
-	compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
-	compile("org.springframework.boot:spring-boot-starter-batch:${springBootVersion}")
-	compile("org.flywaydb:flyway-core:5.1.4")
-	compile("org.postgresql:postgresql:42.2.12.jre7")
-	compile("javax.annotation:javax.annotation-api:1.3.2")
+    implementation('org.hsqldb:hsqldb:2.7.1')
+//    implementation('org.hibernate:hibernate-core:6.1.3.Final')
+//    implementation('org.hibernate:hibernate-entitymanager:5.6.12.Final')
+    implementation("opensymphony:quartz:1.6.3")
+    implementation('commons-collections:commons-collections:3.2.2')
+    implementation('commons-logging:commons-logging:1.2')
+    implementation('net.sf.ehcache:ehcache:2.10.9.2')
+    implementation('org.apache.logging.log4j:log4j-api:2.19.0')
+    implementation('org.apache.logging.log4j:log4j-core:2.19.0')
+    implementation('org.apache.logging.log4j:log4j-1.2-api:2.19.0')
+    //  implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.2")
+    implementation('com.lmax:disruptor:3.4.4')
+    implementation("org.springframework.integration:spring-integration-core:${springVersion}")
+    implementation("org.springframework.integration:spring-integration-file:${springVersion}")
+//    implementation("org.springframework:spring-core:${springVersion}")
+//    implementation("org.springframework:spring-web:${springVersion}")
 
-	compile("com.sun.activation:javax.activation:${javaxActivationVersion}")
-	compile("javax.xml.bind:jaxb-api:${jaxbApiVersion}")
-	compile("com.sun.xml.bind:jaxb-core:${jaxbApiVersion}")
-	compile("com.sun.xml.bind:jaxb-impl:${jaxbApiVersion}")
+    //  implementation("org.springframework.integration:spring-integration-java-dsl:1.2.3.RELEASE")
+    implementation("org.springframework.metrics:spring-metrics:0.5.1.RELEASE")
+    implementation("org.springframework.boot:spring-boot:${springBootVersion}")
+    implementation("org.springframework.boot:spring-boot-actuator:${springBootVersion}")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
+    implementation("org.springframework.boot:spring-boot-starter-batch:${springBootVersion}")
+    implementation("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    implementation("org.springframework.boot:spring-boot-starter-integration:${springBootVersion}")
+    implementation("org.springframework.boot:spring-boot-starter-webflux:${springBootVersion}")
+    implementation('org.flywaydb:flyway-core:9.6.0')
+    implementation('org.postgresql:postgresql:42.5.0')
+    implementation("javax.annotation:javax.annotation-api:1.3.2")
 
-	compile("com.h2database:h2:1.4.200")
+    implementation("com.sun.activation:javax.activation:${javaxActivationVersion}")
+    implementation("javax.xml.bind:jaxb-api:${jaxbApiVersion}")
+    implementation("com.sun.xml.bind:jaxb-core:${jaxbApiVersion}")
+    implementation("com.sun.xml.bind:jaxb-impl:${jaxbApiVersion}")
 
-	compile("org.openjdk.jmh:jmh-core:${jmhVersion}")
-	compile("org.openjdk.jmh:jmh-generator-annprocess:${jmhVersion}")
-	compile("org.openjdk.jmh:jmh-generator-bytecode:${jmhVersion}")
+    implementation('com.h2database:h2:2.1.214')
+
+    implementation("org.openjdk.jmh:jmh-core:${jmhVersion}")
+    implementation("org.openjdk.jmh:jmh-generator-annprocess:${jmhVersion}")
+    implementation("org.openjdk.jmh:jmh-generator-bytecode:${jmhVersion}")
+
+    implementation('com.google.code.gson:gson:2.10')
 
 
-	//	testCompile("junit:junit:4.12")
-	testCompile("commons-beanutils:commons-beanutils:1.9.2")
-	testCompile("org.apache.commons:commons-lang3:3.4")
-	testCompile("org.springframework.integration:spring-integration-test:4.3.6.RELEASE")
-	testCompile("org.springframework:spring-test:4.3.6.RELEASE")
+    //	testimplementation("junit:junit:4.12")
+    testImplementation('commons-beanutils:commons-beanutils:1.9.4')
+    testImplementation('org.apache.commons:commons-lang3:3.12.0')
+    testImplementation('org.springframework.integration:spring-integration-test:5.5.14')
+    testImplementation('org.springframework:spring-test:5.3.23')
 
-	compileOnly("org.projectlombok:lombok:1.18.12")
-	annotationProcessor("org.projectlombok:lombok:1.18.12")
+    compileOnly('org.projectlombok:lombok:1.18.24')
+    annotationProcessor('org.projectlombok:lombok:1.18.24')
 
-	testCompileOnly("org.projectlombok:lombok:1.18.12")
-	testAnnotationProcessor("org.projectlombok:lombok:1.18.12")
+    testCompileOnly('org.projectlombok:lombok:1.18.24')
+    testAnnotationProcessor('org.projectlombok:lombok:1.18.24')
 
-	//    testCompile("org.springframework.batch:spring-batch-test:${springVersion}")
+    //    testimplementation("org.springframework.batch:spring-batch-test:${springVersion}")
 
-	jmh("commons-io:commons-io:2.5")
-	jmh("commons-lang:commons-lang:2.6")
+//    jmh('commons-io:commons-io:2.11.0')
+//    jmh("commons-lang:commons-lang:2.6")
 
-	compile("org.codehaus.groovy:groovy-all:3.0.3")
-	testCompile("org.spockframework:spock-core:2.0-M3-groovy-3.0")
+    implementation('org.codehaus.groovy:groovy-all:3.0.13')
+    testImplementation('org.spockframework:spock-core:2.3-groovy-3.0')
+    testImplementation('org.spockframework:spock-spring:2.3-groovy-3.0')
 
-	testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
-	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.2")
+    testImplementation('org.junit.jupiter:junit-jupiter-api:5.9.0')
+    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.9.0')
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
-jmh {
-	//verbosity = "EXTRA" // Verbosity mode. Available modes are: [SILENT, NORMAL, EXTRA]
-	jvmArgs = ["-Djmh.ignoreLock=true"]
-	jmhVersion = "1.19"
-	fork = 2
-	duplicateClassesStrategy = "warn"
-}
-sourceSets {
-	main {
-		java {
-			srcDirs = [
-				"src/main/java",
-				"src/jmh/java"
-			]
-		}
-	}
-}
+//jmh {
+//    //verbosity = "EXTRA" // Verbosity mode. Available modes are: [SILENT, NORMAL, EXTRA]
+//    jvmArgs = ["-Djmh.ignoreLock=true"]
+//    jmhVersion = "1.19"
+//    fork = 2
+//    duplicateClassesStrategy = "warn"
+//}
+//sourceSets {
+//    main {
+//        java {
+//            srcDirs = [
+//                    "src/main/java",
+//                    "src/jmh/java"
+//            ]
+//        }
+//    }
+//}
 
-task myTask1(){
-	logger.lifecycle("myTask1 - 1")
-	doLast{
-		logger.lifecycle("myTask1 - 2")
-		exec {
-			executable "ls"
-			args "-la"
-		}
-		exec {
-			executable "readlink"
-			args ".", "-f"
-		}
-	}
-}
+//task myTask1() {
+//    logger.lifecycle("myTask1 - 1")
+//    doLast {
+//        logger.lifecycle("myTask1 - 2")
+//        exec {
+//            executable "ls"
+//            args "-la"
+//        }
+//        exec {
+//            executable "readlink"
+//            args ".", "-f"
+//        }
+//    }
+//}
