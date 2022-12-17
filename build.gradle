@@ -67,6 +67,8 @@ dependencies {
 
     implementation('com.google.code.gson:gson:2.10')
 
+    implementation("commons-beanutils:commons-beanutils:1.9.4")
+
 
     //	testimplementation("junit:junit:4.12")
     testImplementation('commons-beanutils:commons-beanutils:1.9.4')
